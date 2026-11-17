@@ -1,0 +1,15 @@
+{
+  "name": "shortform-desk",
+  "version": "0.1.0",
+  "description": "AI 숏폼 시리즈 제작 데스크 — 대본과 설정을 넣으면 키프레임·영상·내레이션·미리보기를 만들고, 검수 에이전트가 통과시킨 것만 전달하며, 사용자 피드백을 규칙으로 일반화해 보드에 쌓는다.",
+  "keywords": [
+    "shortform",
+    "ai-video",
+    "drama",
+    "storyboard",
+    "review"
+  ],
+  "license": "MIT",
+  "repository": "https://github.com/jyang-ca/shortform-desk",
+  "homepage": "https://github.com/jyang-ca/shortform-desk"
+}

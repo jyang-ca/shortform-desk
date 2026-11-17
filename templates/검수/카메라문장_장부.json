@@ -1,0 +1,274 @@
+{
+ "about": "공용 카메라 말 장부 v01(시작판). 시리즈마다 검수 결과로 자란다. dp 에이전트(shortform-desk:dp)가 6칸을 고르고 tools/pipeline/dp_apply.py가 id로 영상 문장에 끼운다. status: ok(이 시리즈 테이크에서 됨) / bad(실패 — dp_apply가 멈춘다) / test(근거만, 시험 전 — 쓰면 결과에 '시험' 표시). 시작판의 test는 다른 시리즈에서 된 말이라도 새 모델·새 인물에서 다시 확인해야 해서 test로 둔다. 검수에서 통과하면 ok로 올리고 evidence에 테이크 경로를, 실패하면 bad로 바꾸고 note에 이유를 적는다. 시리즈 고유 말(인물 머리·옷, 특정 장소·소품)은 이 파일에 시리즈 id로 더한다.",
+ "model": "시리즈 설정 production.video_model·video_resolution을 따른다. 시작판 근거 모델: sume gemini-omni-flash-1.2, 360p, 3~15초, 시작 프레임 / 시작=끝(hold_last_frame) / 시작+끝(REF-END = 시작 가운데 88%). 모델을 바꾸면 ok 말도 test로 내린다.",
+ "slots": {
+  "1_size": "크기",
+  "2_height": "인물 기준 높이·각도",
+  "3_relation": "카메라와 인물의 관계",
+  "4_move": "움직임 + 속도 + 목적",
+  "5_lens": "렌즈·초점",
+  "6_end": "끝 상태·금지",
+  "sound": "소리(화면에 그려지지 않게 — 소리를 내는 물건의 이름을 쓰면 모델이 그 물건을 그린다. 비유로 쓰거나 편집 효과음으로)",
+  "guard": "지킴 줄(인물·하늘·소품)"
+ },
+ "phrases": [
+  {
+   "id": "SIZE-HEAD-BACK",
+   "slot": "1_size",
+   "en": "close on the back of the head",
+   "ko": "뒤통수 클로즈업",
+   "status": "test",
+   "evidence": [],
+   "source": "「사울의 아들」(클로즈업·타이트 미디엄) · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "SIZE-WAIST-BACK",
+   "slot": "1_size",
+   "en": "waist-up from behind",
+   "ko": "뒤에서 허리 위",
+   "status": "test",
+   "evidence": [],
+   "source": "R-SAFE-01 · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "SIZE-HAND-INSERT",
+   "slot": "1_size",
+   "en": "close on the hand only; the head and the rest of the figure stay out of frame",
+   "ko": "손 인서트",
+   "status": "test",
+   "evidence": [],
+   "source": "R-DIR-05 · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "HGT-HEAD",
+   "slot": "2_height",
+   "en": "at the same height as the head",
+   "ko": "머리 높이",
+   "status": "test",
+   "evidence": [],
+   "source": "「사울의 아들」(눈높이 유지), 「콰이어트 플레이스」 · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "HGT-GROUND",
+   "slot": "2_height",
+   "en": "at ground level just behind the head",
+   "ko": "엎드린 인물 머리 뒤 땅 높이",
+   "status": "test",
+   "evidence": [],
+   "source": "R-DIR-13 · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "HGT-EYE",
+   "slot": "2_height",
+   "en": "eye-level",
+   "ko": "눈높이(단독)",
+   "status": "test",
+   "evidence": [],
+   "source": "Google Veo 가이드"
+  },
+  {
+   "id": "REL-FOLLOW",
+   "slot": "3_relation",
+   "en": "The camera follows right behind the head at the same height, moving with the figure, with a gentle handheld sway; no cut.",
+   "ko": "머리 바로 뒤 따라가기",
+   "status": "test",
+   "note": "속도는 문장보다 느리게 나오는 편 — 뛰는 샷은 'runs fast' + 편집 속도 보정을 예상",
+   "evidence": [],
+   "source": "Runway 용어집(관계를 동사로), 「1917」·「칠드런 오브 맨」 · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "REL-PACE",
+   "slot": "3_relation",
+   "en": "the camera keeps one arm's length behind the head, matching the figure's pace",
+   "ko": "인물 속도에 맞춰 한 팔 거리",
+   "status": "test",
+   "evidence": [],
+   "source": "Runway 용어집 'matching her pace'"
+  },
+  {
+   "id": "MOVE-PUSH-END",
+   "slot": "4_move",
+   "en": "The camera slowly and smoothly pushes in, closing in by about one tenth over the whole shot and ending exactly on the framing of the end frame; it never pulls back; no shake, no pan, no cut.",
+   "ko": "천천히 밀기 + 끝 프레임",
+   "status": "test",
+   "needs": "REF-END = 시작 가운데 88%(images/_push/)",
+   "evidence": [],
+   "source": "R-CAM-01, Gemini Omni 가이드(시작→움직임→끝) · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "MOVE-PUSH-NOEND",
+   "slot": "4_move",
+   "en": "The camera slowly pushes in",
+   "ko": "밀기(끝 프레임 없이)",
+   "status": "bad",
+   "evidence": [],
+   "note": "끝 프레임 없이 밀기만 쓰면 카메라가 뒤로 빠져 몸이 더 드러났다 — MOVE-PUSH-END나 MOVE-PUSH1을 쓴다",
+   "source": "다른 시리즈 제작 중 실패"
+  },
+  {
+   "id": "MOVE-PUSH1",
+   "slot": "4_move",
+   "en": "The camera slowly and smoothly pushes in, closing in by about one tenth over the whole shot; no shake, no pan, no cut.",
+   "ko": "밀기(상태가 바뀌는 샷, 시작 프레임만)",
+   "status": "test",
+   "note": "손·물건 인서트에서 됨(짧은 샷은 밀기가 말보다 빠르게 느껴질 수 있다). 인물 뒷모습에는 MOVE-PUSH-END",
+   "evidence": [],
+   "source": "R-CAM-01 시험 · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "MOVE-STILL-SWAY",
+   "slot": "4_move",
+   "en": "The camera stays almost still, with a very slight handheld breathing sway; no cut.",
+   "ko": "거의 고정 + 숨 쉬는 흔들림",
+   "status": "test",
+   "needs": "시작=끝(hold)",
+   "evidence": [],
+   "source": "「콰이어트 플레이스」(핸드헬드) · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "MOVE-LOCKED",
+   "slot": "4_move",
+   "en": "Fixed camera, static, locked-off.",
+   "ko": "완전 고정",
+   "status": "test",
+   "note": "사진 같은 샷이 되기 쉽다(R-CAM-01) — 장면 안 움직임을 함께 적는다",
+   "evidence": [],
+   "source": "Gemini Omni 가이드 · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "MOVE-REVEAL",
+   "slot": "4_move",
+   "en": "pushes in slowly to reveal …",
+   "ko": "목적을 붙인 밀기",
+   "status": "test",
+   "evidence": [],
+   "source": "Runway 용어집(목적을 적는다)"
+  },
+  {
+   "id": "LENS-40",
+   "slot": "5_lens",
+   "en": "shot on a 40mm lens, close to the natural perspective of the human eye",
+   "ko": "40mm 눈 화각",
+   "status": "test",
+   "evidence": [],
+   "source": "사울의 아들(Erdély 논문·인터뷰)"
+  },
+  {
+   "id": "LENS-SHALLOW",
+   "slot": "5_lens",
+   "en": "Shallow depth of field: the subject sharp; the background falls softly out of focus, still recognisable by its light and colours.",
+   "ko": "얕은 심도",
+   "status": "test",
+   "note": "키프레임 문장에서 됨. 영상 문장에선 시험 전",
+   "evidence": [],
+   "source": "R-LOOK-01 · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "END-HOLD",
+   "slot": "6_end",
+   "en": "(hold_last_frame: 시작=끝)",
+   "ko": "시작=끝",
+   "status": "test",
+   "note": "움직임 작은 샷은 문장만으로는 인물이 엉뚱하게 움직인다(일어나 앉음 등)",
+   "evidence": [],
+   "source": "R-MOV-02 · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "END-NO-PULLBACK",
+   "slot": "6_end",
+   "en": "the camera never pulls back, never rises and never shows more of the figure than the start frame does",
+   "ko": "뒤로 빠지거나 올라가지 않음",
+   "status": "test",
+   "note": "그래도 뒤로 빠지면 편집에서 앞부분만 쓴다",
+   "evidence": [],
+   "source": "R-SAFE-01 · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "GUARD-HEAD-STILL",
+   "slot": "guard",
+   "en": "The head stays completely still the whole time, exactly as in the start frame; it never turns, never lifts and never shows any face.",
+   "ko": "고개 고정",
+   "status": "test",
+   "note": "뒤·옆 구도에서 고개를 돌리면 얼굴(이목구비)이 생긴다",
+   "evidence": [],
+   "source": "R-ID-01, R-MOV-01 · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "GUARD-HEAD-TURN",
+   "slot": "guard",
+   "en": "the head turns slowly to the right",
+   "ko": "고개 돌리기(뒤·옆 구도)",
+   "status": "bad",
+   "evidence": [],
+   "note": "뒤·옆 구도에서 고개를 돌리게 하자 옆얼굴(코·입)이 생겼다 — 얼굴 없는·얼굴 고정 인물 모두 위험",
+   "source": "다른 시리즈 제작 중 실패"
+  },
+  {
+   "id": "GUARD-LIE-STILL",
+   "slot": "guard",
+   "en": "the figure lies flat and completely still the whole time; the head stays exactly where it is — it never rises, and the figure never lifts up, sits up or gets up",
+   "ko": "엎드린 채 고정",
+   "status": "test",
+   "note": "원래 문장의 머리 모양 낱말을 빼고 일반화한 판 — 다시 시험",
+   "evidence": [],
+   "source": "R-MOV-02 · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "GUARD-SKY-EMPTY",
+   "slot": "guard",
+   "en": "The sky stays empty: no light, no aircraft and nothing flying appears at any moment.",
+   "ko": "하늘 비움(하늘의 물체는 편집 합성)",
+   "status": "test",
+   "note": "붉은 기운·점이 시작 그림에 있으면 모델이 그것을 물체로 키운다 — 시작 그림에서 지우고 편집에서 합성(R-SIZE-04)",
+   "evidence": [],
+   "source": "R-SIZE-04 · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "ACT-WALK-OUT-BACK",
+   "slot": "4_move",
+   "en": "the figure walks out through the door (waist-up back view)",
+   "ko": "허리 위 뒷모습으로 걸어 나가기",
+   "status": "bad",
+   "note": "어깨 아래가 넓게 보이는 걸어 나가는 뒷모습은 안전 검사에 막혔다 — 머리·어깨 위로 자르고 밀기만",
+   "evidence": [],
+   "source": "R-SAFE-01, 다른 시리즈 안전 검사 거절"
+  },
+  {
+   "id": "GUARD-BREATH-SINK",
+   "slot": "guard",
+   "en": "Apart from that one slow sinking breath, the head never lifts, never turns and never shows any face; the figure never rises, sits up or gets up.",
+   "ko": "숨 한 번 가라앉음 외 고정",
+   "status": "test",
+   "evidence": [],
+   "source": "R-MOV-02 · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "GUARD-ONE-HAND",
+   "slot": "guard",
+   "en": "Only ONE hand is visible; no second hand appears at any moment.",
+   "ko": "손 하나만",
+   "status": "test",
+   "evidence": [],
+   "source": "R-ID-06 · 다른 시리즈에서 됨(근거만)"
+  },
+  {
+   "id": "SND-WIND-GLASS-PUSH",
+   "slot": "sound",
+   "en": "soft wind against the window glass (with a 5-second push over fog)",
+   "ko": "안개 위 긴 밀기 + 바람 소리",
+   "status": "bad",
+   "note": "안개 화면에 5초 밀기와 바람 소리를 함께 주자 안개가 큰 소용돌이 무늬로 말렸다 — 안개 샷은 FOG-EVEN-HAZE + 거의 정적인 소리",
+   "evidence": [],
+   "source": "다른 시리즈 제작 중 실패"
+  },
+  {
+   "id": "FOG-EVEN-HAZE",
+   "slot": "guard",
+   "en": "The fog is one even, soft white haze that drifts very slowly sideways; it stays smooth and shapeless the whole time.",
+   "ko": "고른 안개",
+   "status": "test",
+   "evidence": [],
+   "source": "다른 시리즈에서 SND-WIND-GLASS-PUSH 대신 쓴 방식"
+  }
+ ]
+}

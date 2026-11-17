@@ -1,0 +1,13 @@
+{
+  "name": "shortform-desk",
+  "owner": {
+    "name": "jyang-ca"
+  },
+  "plugins": [
+    {
+      "name": "shortform-desk",
+      "source": "./",
+      "description": "AI 숏폼 시리즈 제작 데스크"
+    }
+  ]
+}

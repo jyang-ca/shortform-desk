@@ -1,0 +1,90 @@
+{
+ "schema": 1,
+ "_note": "시리즈 설정. series-setup 스킬이 사용자 답으로 채운다. 도구(prompt_lint·preview_check·dp_apply·assemble_preview)와 에이전트가 모두 이 파일을 읽는다. 값이 바뀌면 여기부터 고치고 검수/규칙집 변경 기록에 남긴다. 빈 값(\"\" 또는 [])은 '아직 안 정함' — 도구는 그 검사를 건너뛴다.",
+ "title": "",
+ "slug": "",
+ "logline": "",
+ "genre": "",
+ "platform": "youtube-shorts",
+ "language": "ko-KR",
+ "prompt_language": "en",
+ "format": {
+  "aspect": "9:16",
+  "max_seconds": 180,
+  "target_seconds": [60, 120],
+  "episodes_planned": 0,
+  "narration": "first-person-vo",
+  "chars_per_sec": [6.2, 6.9],
+  "chars_per_sec_fail_above": 7.0,
+  "tts_tempo_max": 1.25,
+  "first_shot_seconds": [2.5, 3.2],
+  "mean_shot_seconds": [2.0, 3.8],
+  "min_shot_seconds": 1.0,
+  "opening_line": "",
+  "closing_line": "",
+  "loudness": {"program_lufs": -15.0, "program_tolerance": 1.0, "narration_lufs": -18.2, "true_peak_max": -1.0},
+  "preview_size": [720, 1280],
+  "fps": 24
+ },
+ "look": {
+  "style": "",
+  "style_line": "",
+  "palette": "",
+  "camera_temperament": "calm",
+  "tempo_change_per_10s_max": 1.6,
+  "notes": ""
+ },
+ "characters": [
+  {
+   "id": "C1",
+   "name": "",
+   "role": "주인공",
+   "ref_label": "《主角·C1》",
+   "prompt_words": [],
+   "ref_sheets": [],
+   "rendering": "",
+   "image_sentence": "",
+   "video_sentence": "",
+   "hands_sentence": "",
+   "faceless": false,
+   "locks": []
+  }
+ ],
+ "locations": [
+  {
+   "id": "L1",
+   "name": "",
+   "layout": "",
+   "ref_label": "《场景·L1》",
+   "ref_images": [],
+   "fixed_props": [],
+   "orientation": ""
+  }
+ ],
+ "props": [],
+ "safety": {
+  "forbidden_words": ["nude", "naked", "bodysuit", "skin-?tight", "latex", "sexy", "lingerie", "bikini", "cleavage"],
+  "video_body_word_check": false,
+  "body_words": ["woman", "women", "girl", "she", "her", "hers", "body", "hips?", "legs?", "chest", "breasts?", "buttocks?", "waist", "thighs?"],
+  "figure_words": ["she", "her", "he", "him", "his", "figure", "woman", "man", "girl", "boy", "person", "character"],
+  "require_no_text_line": true,
+  "no_text_line": "No readable text, no logos, no watermark.",
+  "notes": ""
+ },
+ "production": {
+  "image_adapter": "codex-image",
+  "video_adapter": "sume-video",
+  "tts_adapter": "elevenlabs-tts",
+  "video_model": "gemini-omni-flash-1.2",
+  "video_resolution": "360p",
+  "voice_id": "",
+  "voice_name": "",
+  "tts_model": "eleven_v4",
+  "tts_settings": {"stability": 0.6, "similarity_boost": 0.75},
+  "parallel": {"image": 3, "video": 6, "tts": 2}
+ },
+ "review": {
+  "reviewer": "",
+  "baseline": {"user_points_per_episode": null, "preview_versions_per_episode": null}
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "note": "사용자가 정한 '지금 값'(소품 종류·색·의상·고정 구조 등)과 금지 낱말. tools/qa/prompt_lint.py가 모든 프롬프트를 이 표와 대본다. 결정이 바뀌면 여기부터 고친다(날짜·원문). 항목 형식은 example을 본다.",
+ "example": {
+  "id": "D-EXAMPLE",
+  "date": "YYYY-MM-DD",
+  "what": "주인공의 우산은 늘 빨간 장우산",
+  "quote": "사용자 원문 그대로",
+  "rule": "R-PROP-03",
+  "applies": "all | image | video",
+  "trigger": "\\bumbrella\\b",
+  "require": "red",
+  "forbid": "(blue|black|clear|folding) umbrella",
+  "level": "fail | warn"
+ },
+ "decisions": []
+}
